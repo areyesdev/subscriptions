@@ -1,6 +1,20 @@
 import Head from 'next/head';
 import Card from '../components/Card';
 
+const subscriptions = [
+  {
+    title: 'Netflix',
+    tags: ['#netflix', '#movies'],
+    price: 34000,
+    currency: 'COP',
+    time: 'MONTHLY',
+    card: {
+      type: 'VISA',
+      number: 1234,
+    },
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -16,11 +30,13 @@ export default function Home() {
 
       <main className='main'>
         <Card />
+        <Card />
       </main>
       <style jsx>{`
         .main {
           height: 100%;
           display: grid;
+          gap: 20px;
           place-content: center;
         }
       `}</style>
