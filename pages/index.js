@@ -3,12 +3,27 @@ import Card from '../components/Card';
 
 const subscriptions = [
   {
+    cover:
+      'https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
     title: 'Netflix',
     tags: ['#netflix', '#movies'],
     price: 34000,
     currency: 'COP',
     time: 'MONTHLY',
-    card: {
+    creaditCard: {
+      type: 'MASTERCARD',
+      number: 1234,
+    },
+  },
+  {
+    cover:
+      'https://images.unsplash.com/photo-1614680376593-902f74cf0d41?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+    title: 'Spotify',
+    tags: ['#music', '#essential'],
+    price: 14000,
+    currency: 'COP',
+    time: 'MONTHLY',
+    creaditCard: {
       type: 'VISA',
       number: 1234,
     },
@@ -29,8 +44,9 @@ export default function Home() {
       </Head>
 
       <main className='main'>
-        <Card />
-        <Card />
+        {subscriptions.map((subscription) => (
+          <Card key={subscription.title} {...subscription} />
+        ))}
       </main>
       <style jsx>{`
         .main {

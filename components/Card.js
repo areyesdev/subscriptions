@@ -1,29 +1,50 @@
 import React from 'react';
 
-export default function Card() {
+export default function Card({
+  cover,
+  title,
+  tags,
+  price,
+  currency,
+  time,
+  creaditCard,
+}) {
   return (
     <>
       <div className='card'>
         <div
           className='cover'
           style={{
-            background:
-              'url(https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80)',
+            backgroundImage: `url(${cover})`,
           }}
         >
-          <h1 className='title'>Netflix</h1>
+          <h1 className='title'>{title}</h1>
           <div className='tags'>
-            <span className='tag'>#netflix</span>
-            <span className='tag'>#movies</span>
+            {tags.map((tag) => {
+              return (
+                <span className='tag' key={tag}>
+                  {tag}
+                </span>
+              );
+            })}
           </div>
         </div>
         <div className='content'>
           <div className='subscription'>
-            <span className='price'>34.000 COP</span>
-            <span className='time'>/mo</span>
+            <span className='price'>
+              {price} {currency}
+            </span>
+            <span className='time'>{time === 'MONTHLY' ? '/mo' : 'year'}</span>
           </div>
           <div className='credit-card'>
-            <div className='credit-card-number'>1234</div>
+            <span className='icon'>
+              <img
+                src={`/icons/${
+                  creaditCard.type === 'VISA' ? 'visa' : 'mastercard'
+                }.svg `}
+              />
+            </span>
+            <div className='credit-card-number'>{creaditCard.number}</div>
           </div>
         </div>
       </div>
@@ -38,6 +59,7 @@ export default function Card() {
           flex-direction: column;
         }
         .cover {
+          position: relative;
           height: 180px;
           display: flex;
           flex-direction: column;
@@ -45,17 +67,27 @@ export default function Card() {
           color: #fff;
           padding: 10px 20px 20px;
           border-radius: 4px 4px 0 0;
+          background-repeat: no-repeat;
           background-size: cover;
+        }
+        .cover::before {
+          content: '';
+          position: absolute;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 65%)
+          inset: 0;
         }
         .title {
           font-size: 24px;
           font-weight: bold;
+          position: relative;
+          text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
         }
         .tags {
           display: flex;
           justify-content: flex-start;
           gap: 10px;
           margin-top: 10px;
+          position: relative;
         }
         .tag {
           background: #475569;
@@ -63,6 +95,7 @@ export default function Card() {
           border-radius: 10px;
           font-size: 12px;
           text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+          text-transform: capitalize;
         }
         .content {
           displat: flex;
@@ -72,7 +105,7 @@ export default function Card() {
         .subscription {
           display: flex;
           align-items: center;
-          font-size: 32px;
+          font-size: 24px;
           font-weight: bold;
         }
         .price {
@@ -84,7 +117,17 @@ export default function Card() {
           font-size: 28px;
         }
         .credit-card {
+          display: flex;
+          gap: 5px;
+          align-items: center;
           margin-top: 20px;
+        }
+        .credit-card .icon {
+          width: 30px;
+          line-height: 0;
+        }
+        .credit-card .icon img {
+          width: 100%;
         }
         .credit-card-number {
           font-weight: bold;
