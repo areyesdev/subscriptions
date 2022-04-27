@@ -50,11 +50,12 @@ export default function Card({
       </div>
       <style jsx>{`
         .card {
+          background: #fff;
           border: 1px solid #e5e7eb;
           border-radius: 8px;
-          box-shadow: 0 10px 15px -3px rgba(0 0 0 / 0.1),
-            0 4px 6px -4px rgba(0 0 0 / 0.1);
-          width: 350px;
+          box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+            0 4px 6px -4px rgb(0 0 0 / 0.1);
+          width: 100%;
           display: flex;
           flex-direction: column;
         }
@@ -97,38 +98,38 @@ export default function Card({
         .tag {
           background: #475569;
           padding: 2px 10px;
-          border-radius: 10px;
-          font-size: 12px;
+          border-radius: 14px;
+          font-size: 14px;
           text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
           text-transform: capitalize;
         }
         .content {
-          displat: flex;
+          display: flex;
           flex-direction: column;
           padding: 20px;
         }
         .subscription {
           display: flex;
           align-items: center;
-          font-size: 24px;
+          font-size: 30px;
+          gap: 5px;
           font-weight: bold;
         }
         .price {
           color: #111827;
-          margin-right: 10px;
         }
         .time {
-          color: #6b7288;
-          font-size: 28px;
+          color: #6b7280;
+          font-size: 26px;
         }
         .credit-card {
           display: flex;
-          gap: 5px;
+          gap: 10px;
           align-items: center;
           margin-top: 10px;
         }
         .credit-card .icon {
-          width: 30px;
+          width: 35px;
           line-height: 0;
         }
         .credit-card .icon img {
@@ -136,6 +137,7 @@ export default function Card({
         }
         .credit-card-number {
           font-weight: bold;
+          font-size: 22px;
           color: #374151;
         }
       `}</style>
