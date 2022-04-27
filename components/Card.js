@@ -1,13 +1,13 @@
 import React from 'react';
 
 export default function Card({
-  cover,
+  unsplashId,
   title,
   tags,
   price,
   currency,
   time,
-  creaditCard,
+  creditCard,
 }) {
   return (
     <>
@@ -15,7 +15,7 @@ export default function Card({
         <div
           className='cover'
           style={{
-            backgroundImage: `url(${cover})`,
+            backgroundImage: `url(https://source.unsplash.com/${unsplashId})`,
           }}
         >
           <h1 className='title'>{title}</h1>
@@ -32,7 +32,7 @@ export default function Card({
         <div className='content'>
           <div className='subscription'>
             <span className='price'>
-              {price} {currency}
+              {new Intl.NumberFormat().format(price)} {currency}
             </span>
             <span className='time'>{time === 'MONTHLY' ? '/mo' : 'year'}</span>
           </div>
@@ -40,18 +40,18 @@ export default function Card({
             <span className='icon'>
               <img
                 src={`/icons/${
-                  creaditCard.type === 'VISA' ? 'visa' : 'mastercard'
+                  creditCard.type === 'VISA' ? 'visa' : 'mastercard'
                 }.svg `}
               />
             </span>
-            <div className='credit-card-number'>{creaditCard.number}</div>
+            <div className='credit-card-number'>{creditCard.number}</div>
           </div>
         </div>
       </div>
       <style jsx>{`
         .card {
           border: 1px solid #e5e7eb;
-          border-radius: 4px;
+          border-radius: 8px;
           box-shadow: 0 10px 15px -3px rgba(0 0 0 / 0.1),
             0 4px 6px -4px rgba(0 0 0 / 0.1);
           width: 350px;
@@ -66,14 +66,19 @@ export default function Card({
           justify-content: flex-end;
           color: #fff;
           padding: 10px 20px 20px;
-          border-radius: 4px 4px 0 0;
+          border-radius: 8px 8px 0 0;
           background-repeat: no-repeat;
           background-size: cover;
         }
         .cover::before {
           content: '';
           position: absolute;
-          background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 65%)
+          border-radius: 8px 8px 0 0;
+          background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.2) 65%
+          );
           inset: 0;
         }
         .title {
@@ -120,7 +125,7 @@ export default function Card({
           display: flex;
           gap: 5px;
           align-items: center;
-          margin-top: 20px;
+          margin-top: 10px;
         }
         .credit-card .icon {
           width: 30px;

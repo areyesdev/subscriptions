@@ -1,0 +1,38 @@
+[
+  {
+    "unsplashId": "UVfvFrp4x4E",
+    "title": "Netflix",
+    "tags": ["entertainment", "essential"],
+    "price": 38900,
+    "currency": "COP",
+    "time": "MONTHLY",
+    "creditCard": {
+      "type": "MASTERCARD",
+      "number": 9387
+    }
+  },
+  {
+    "unsplashId": "itRfuFf1gdY",
+    "title": "Disney+",
+    "tags": ["entertainment", "paypal"],
+    "price": 21000,
+    "currency": "COP",
+    "time": "MONTHLY",
+    "creditCard": {
+      "type": "VISA",
+      "number": 2671
+    }
+  },
+  {
+    "unsplashId": "w-qqwn5O-4I",
+    "title": "Spotify",
+    "tags": ["entertainment", "music"],
+    "price": 11000,
+    "currency": "COP",
+    "time": "MONTHLY",
+    "creditCard": {
+      "type": "VISA",
+      "number": 2671
+    }
+  }
+]
