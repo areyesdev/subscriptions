@@ -20,7 +20,6 @@ const Summary = ({ data, total }) => {
             <div>
               <select value='USD'>
                 <option value='COP'>COP</option>
-                <option value='SEK'>SEK</option>
                 <option value='USD'>USD</option>
               </select>
             </div>
@@ -40,7 +39,6 @@ const Summary = ({ data, total }) => {
           <div>
             <select value='USD'>
               <option value='COP'>COP</option>
-              <option value='SEK'>SEK</option>
               <option value='USD'>USD</option>
             </select>
           </div>

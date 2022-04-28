@@ -1,7 +1,6 @@
 export const DEFAULT_UNSPLASH_ID = '3zx-cgfbFAg';
 
 const ONE_USD_TO_COP = 3741.5;
-const ONE_USD_TO_SEK = 9.68;
 const ONE_USD_TO_EUR = 0.9;
 
 export const TIME_DESCRIPTION = {
@@ -17,6 +16,5 @@ export const CREDIT_CARD_TYPES = {
 export const CURRENCY_TO_USD = {
   USD: (price) => price,
   COP: (price) => price / ONE_USD_TO_COP,
-  SEK: (price) => price / ONE_USD_TO_SEK,
   EUR: (price) => price / ONE_USD_TO_EUR,
 };
