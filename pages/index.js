@@ -14,12 +14,17 @@ import {
 import subscriptions from '../data/subscriptions.json';
 
 import { TIME_ATTRIBUTE } from '../constants';
+import useCurrencyExchangeRates from '../hooks/useCurrencyExchangeRates';
 
 export default function Home() {
+  const { rates } = useCurrencyExchangeRates();
   const [time, setTime] = useState('MONTHLY');
+  const [currency, setCurrency] = useState('ALL');
 
-  const grouppedMonthlySubscriptions =
-    getMonthlySubscriptionGrouppedByCard(subscriptions);
+  const grouppedMonthlySubscriptions = getMonthlySubscriptionGrouppedByCard(
+    subscriptions,
+    rates
+  );
 
   const summaryData = getSummaryData(grouppedMonthlySubscriptions);
 
