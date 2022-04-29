@@ -3,7 +3,7 @@ import Card from './Card';
 import CreditCardIcon from './CreditCardIcon';
 import Subscription from './Subscription';
 
-const CreditCard = ({ type, number, currency, time, price }) => {
+const CreditCard = ({ type, number, currency, time, price, decimals }) => {
   return (
     <>
       <Card>
@@ -13,7 +13,8 @@ const CreditCard = ({ type, number, currency, time, price }) => {
             price={price}
             currency={currency}
             time={time}
-            size='small'
+            decimals={decimals}
+            size='sm'
           />
         </div>
       </Card>

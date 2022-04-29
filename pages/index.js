@@ -1,10 +1,11 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CardSubscription from '../components/CardSubscription';
 import Subtitle from '../components/Subtitle';
 import Price from '../components/Price';
 import CreditCard from '../components/CreditCard';
+import Filter from '../components/Filter';
 
 import {
   getMonthlySubscriptionGrouppedByCard,
@@ -19,11 +20,14 @@ import subscriptions from '../data/subscriptions.json';
 import { TIME_ATTRIBUTE } from '../constants';
 import useCurrencyExchangeRates from '../hooks/useCurrencyExchangeRates';
 
+import useMedia from '../hooks/useMedia';
+
 export default function Home() {
   const [time, setTime] = useState('YEARLY');
   const [currency, setCurrency] = useState('USD');
   const [sortBy, setSortBy] = useState('PRICE');
   const [card, setCard] = useState('');
+  const isDesktop = useMedia(['(min-width: 992px)'], [true]);
 
   const { rates } = useCurrencyExchangeRates();
   const grouppedMonthlySubscriptions = getMonthlySubscriptionGrouppedByCard(
@@ -61,79 +65,77 @@ export default function Home() {
           href='https://cdn.jsdelivr.net/gh/jgthms/minireset.css@master/minireset.min.css'
         ></link>
       </Head>
+      <nav>
+        <section className='row'>
+          <Filter
+            label='Sort by'
+            value={sortBy}
+            setValue={setSortBy}
+            options={[
+              { text: 'Price', value: 'PRICE' },
+              { text: 'Name', value: 'NAME' },
+              { text: 'Card', value: 'CARD' },
+            ]}
+          />
+          <Filter
+            label='Currency'
+            value={currency}
+            setValue={setCurrency}
+            options={[
+              { text: 'USD', value: 'USD' },
+              { text: 'COP', value: 'COP' },
+              { text: 'EUR', value: 'EUR' },
+            ]}
+          />
+
+          <Filter
+            label='Time'
+            value={time}
+            setValue={setTime}
+            options={[
+              { text: 'Yearly', value: 'YEARLY' },
+              { text: 'Monthly', value: 'MONTHLY' },
+            ]}
+          />
+
+          <Filter
+            label='Cards'
+            value={card}
+            setValue={setCard}
+            options={[
+              { text: 'All', value: '' },
+              ...cards.map((card) => ({
+                text: `${card.split('_')[1]} (${
+                  CREDIT_CARD_TYPES[card.split('_')[0]]
+                })`,
+                value: card,
+              })),
+            ]}
+          />
+        </section>
+      </nav>
       <main className='container'>
         <section className='row'>
-          <fieldset>
-            <label>Sort by</label>
-            <select onChange={(event) => setSortBy(event.currentTarget.value)}>
-              <option value='PRICE' selected={sortBy === 'PRICE'}>
-                Price
-              </option>
-              <option value='NAME' selected={sortBy === 'NAME'}>
-                Name
-              </option>
-              <option value='CARD' selected={sortBy === 'CARD'}>
-                Card
-              </option>
-            </select>
-          </fieldset>
-
-          <fieldset>
-            <label>Currency</label>
-            <select
-              onChange={(event) => setCurrency(event.currentTarget.value)}
-            >
-              <option value='USD' selected={currency === 'USD'}>
-                USD
-              </option>
-              <option value='COP' selected={currency === 'COP'}>
-                COP
-              </option>
-              <option value='EUR' selected={currency === 'EUR'}>
-                EUR
-              </option>
-            </select>
-          </fieldset>
-
-          <fieldset>
-            <label>Time</label>
-            <select onChange={(event) => setTime(event.currentTarget.value)}>
-              <option value='YEARLY' selected={time === 'YEARLY'}>
-                /yearly
-              </option>
-              <option value='MONTHLY' selected={time === 'MONTHLY'}>
-                /mo
-              </option>
-            </select>
-          </fieldset>
-
-          <fieldset>
-            <label>Cards</label>
-            <select onChange={(event) => setCard(event.currentTarget.value)}>
-              <option value='' selected={card === ''}>
-                All
-              </option>
-              {cards.map((card) => (
-                <option key={card} value={card}>
-                  {card.split('_')[1]} ({CREDIT_CARD_TYPES[card.split('_')[0]]})
-                </option>
-              ))}
-            </select>
-          </fieldset>
-        </section>
-        <section className='row'>
-          <article>
-            <Subtitle>Total Monthly</Subtitle>
-            <Price currency={currency}>{summaryTotal.monthly}</Price>
-          </article>
-          <article>
-            <Subtitle>Total Yearly</Subtitle>
-            <Price currency={currency}>{summaryTotal.yearly}</Price>
-          </article>
+          {(isDesktop || time === 'MONTHLY') && (
+            <article>
+              <Subtitle>Total Monthly</Subtitle>
+              <Price currency={currency} decimals={0} size='lg'>
+                {summaryTotal.monthly}
+              </Price>
+            </article>
+          )}
+          {(isDesktop || time === 'YEARLY') && (
+            <article>
+              <Subtitle>Total Yearly</Subtitle>
+              <Price currency={currency} decimals={0} size='lg'>
+                {summaryTotal.yearly}
+              </Price>
+            </article>
+          )}
         </section>
 
         <section>
-          <Subtitle>Total by Card</Subtitle>
+          <Subtitle>Cards {time}</Subtitle>
           <div className='cards-container'>
             {summaryData.map((data) => {
               return (
@@ -142,8 +144,8 @@ export default function Home() {
                   number={data.creditCard.number}
                   type={data.creditCard.type}
                   currency={data[TIME_ATTRIBUTE[time]].currency}
-                  time={time}
                   price={data[TIME_ATTRIBUTE[time]].price}
+                  decimals={0}
                 />
               );
             })}
@@ -212,10 +214,17 @@ export default function Home() {
           flex-direction: column;
           gap: 10px;
         }
-        section.row {
+        nav {
+          background: #e11d48;
+          padding: 12px 20px;
+        }
+        .row {
           flex-direction: row;
           flex-wrap: wrap;
           gap: 20px 30px;
+        }
+        .evenly {
+          justify-content: space-evenly;
         }
         .cards-container {
           width: 100%;
