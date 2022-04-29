@@ -14,6 +14,7 @@ const Price = ({ children, currency, size }) => {
           style: 'currency',
           currency,
           maximumFractionDigits: currency === 'USD' ? 2 : 0,
+          minimumFractionDigits: 0,
         }).format(children)}{' '}
         <span className={`currency ${size && `size-${size}`}`}>
           ({currency})
