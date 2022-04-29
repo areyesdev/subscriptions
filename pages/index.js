@@ -37,7 +37,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Sublr</title>
+        <title>Subscriptions</title>
         <meta
           name='description'
           content='Keep your subscriptions summary in one place'
