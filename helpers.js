@@ -12,18 +12,26 @@ export const currencyToUsd = (rates) => ({
 export const getUsdPrice = (price, currency, rates) =>
   Number(currencyToUsd(rates)[currency](price).toFixed(2));
 
-export const getMonthlySubscriptionGrouppedByCard = (subscriptions, rates) =>
+export const getMonthlySubscriptionGrouppedByCard = (
+  subscriptions,
+  currency,
+  rates
+) =>
   subscriptions.reduce((group, sub) => {
     const foreignKey = `${sub.creditCard.type}_${sub.creditCard.number}`;
 
     const monthlyPrice = sub.time === 'MONTHLY' ? sub.price : sub.price / 12;
 
+    const usdPrice = getUsdPrice(monthlyPrice, sub.currency, rates);
+    const price =
+      currency === 'USD' ? usdPrice : usdPrice * (rates?.[currency] ?? 1);
+
     if (group[foreignKey]) {
-      group[foreignKey].price += getUsdPrice(monthlyPrice, sub.currency, rates);
+      group[foreignKey].price += price;
     } else {
       group[foreignKey] = {
-        price: getUsdPrice(monthlyPrice, sub.currency, rates),
-        currency: 'USD',
+        price,
+        currency,
       };
     }
 
